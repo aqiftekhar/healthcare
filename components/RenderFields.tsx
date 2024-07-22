@@ -3,7 +3,9 @@ import { Input } from "./ui/input"
 import { FormFieldTypes } from "@/lib/FormFieldTypes";
 import Image from "next/image";
 import { FormControl } from "./ui/form";
-
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input'
+import { E164Number } from "libphonenumber-js/core";
 export const RenderFields = ({ field, props }: { field: any, props: ICustomProps }) => {
     const { fieldType, iconSrc, iconAlt, placeholder } = props;
     switch (fieldType) {
@@ -28,7 +30,20 @@ export const RenderFields = ({ field, props }: { field: any, props: ICustomProps
                     </FormControl>
                 </div>
             )
-
+        case FormFieldTypes.PHONE_INPUT:
+            return (
+                <FormControl>
+                    <PhoneInput 
+                    defaultCountry="PK"
+                    placeholder={placeholder}
+                    international
+                    withCountryCallingCode
+                    value={field.value as E164Number | undefined}
+                    onChange={field.onChange}
+                    className="input-phone"
+                    />
+                </FormControl>
+            )
         default:
             break;
     }
