@@ -11,7 +11,6 @@ const {
 } = process.env;
 
 const client = new sdk.Client();
-console.log("Client = ", client);
 
 client.setEndpoint(ENDPOINT!).setProject(PROJECT_ID!).setKey(API_KEY!);
 

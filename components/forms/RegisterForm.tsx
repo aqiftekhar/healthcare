@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import CustomFormFields from "../CustomFormFields"
 import { FormFieldTypes } from "@/lib/FormFieldTypes"
@@ -16,7 +15,7 @@ import { createUser } from "@/lib/actions/patient.actions"
 
 
 
-const RegisterForm = ({user}: {user: User}) => {
+const RegisterForm = ({user} : {user: User}) => {
     const router = useRouter();
     const [isLoading, setisLoading] = useState(false);
     
@@ -31,15 +30,22 @@ const RegisterForm = ({user}: {user: User}) => {
     })
 
     // 2. Define a submit handler.
-    async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
+    async function onSubmit(values: z.infer<typeof UserFormValidation>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-
+        
         setisLoading(true);
+        
         try {
-            const user_data = {name, email, phone}
+            
+            const user_data = {
+                name: values.name,
+                email: values.email,
+                phone: values.phone,
+              };
+            
             const user = await createUser(user_data);
-
+              
             if (user) router.push(`/patients/${user.$id}/register`)
         } catch (error) {
             console.log(error)
@@ -49,16 +55,10 @@ const RegisterForm = ({user}: {user: User}) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12 flex-1">
-                <section className="space-y-4">
-                    <h1 className="header"> Welcome 👋 </h1>
-                    <p className="text-dark-700">Let us know more about yourslef.</p>
-                </section>
-                <section className="space-y-6">
-                    <div className="mb-9 space-y-1">
-                       <h2 className="sub-header">Personal Information.</h2> 
-                    </div>
-                    
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
+                <section className="mb-12 space-y-4">
+                    <h1 className="header"> Hi There 👋 </h1>
+                    <p className="text-dark-700">Schedule your appointments.</p>
                 </section>
                 <CustomFormFields
                     fieldType={FormFieldTypes.INPUT}
@@ -69,7 +69,7 @@ const RegisterForm = ({user}: {user: User}) => {
                     iconAlt="user"
                     control={form.control}
                 />
-
+                
                 <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
             </form>
         </Form>
