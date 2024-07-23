@@ -1,4 +1,4 @@
-import * as SDK from 'node-appwrite'
+import * as sdk from 'node-appwrite'
 const {
   PROJECT_ID,
   API_KEY,
@@ -10,11 +10,12 @@ const {
   NEXT_PUBLIC_ENDPOINT : ENDPOINT
 } = process.env;
 
-const client = new SDK.Client();
+const client = new sdk.Client();
+console.log("Client = ", client);
 
 client.setEndpoint(ENDPOINT!).setProject(PROJECT_ID!).setKey(API_KEY!);
 
-export const databases = new SDK.Databases(client);
-export const storage = new SDK.Storage(client);
-export const messaging = new SDK.Messaging(client);
-export const users = new SDK.Users(client);
+export const databases = new sdk.Databases(client);
+export const storage = new sdk.Storage(client);
+export const messaging = new sdk.Messaging(client);
+export const users = new sdk.Users(client);
