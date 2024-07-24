@@ -44,6 +44,7 @@ const RegisterForm = ({ userId }: { userId: string }) => {
     // 1. Define your form.
     const form = useForm<z.infer<typeof PatientFormValidation>>({
         resolver: zodResolver(PatientFormValidation),
+        //@ts-ignore
         defaultValues: {
             ...PatientFormDefaultValues,
             name: "",
@@ -70,8 +71,6 @@ const RegisterForm = ({ userId }: { userId: string }) => {
             form_data.append('blobFile', blob);
             form_data.append('fileName', values.identificationDocument[0].name);
         }
-
-        console.log({user});
         
         try {
             const patient_data = {
@@ -80,12 +79,10 @@ const RegisterForm = ({ userId }: { userId: string }) => {
                 birthDate: new Date(values.birthDate),
                 identificationDocument: form_data,
             }
-            console.log("=== PATIENT DATA ===",{patient_data});
-            
+
             //@ts-ignore
             const patient = await registerPatient(patient_data);
-            console.log("===PATIENT===", patient);
-            
+
             if(patient) router.push(`/patients/${userId}/new-appointment`)
         } catch (error) {
             console.log(error)

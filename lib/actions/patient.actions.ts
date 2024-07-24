@@ -63,8 +63,7 @@ export const registerPatient = async ({
 
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
-    console.log("===PATIENT in registerPatient ===",{patient});
-    
+
     const new_patient = await databases.createDocument(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
@@ -75,7 +74,6 @@ export const registerPatient = async ({
         ...patient,
       }
     );
-    console.log("====NEW PATIENT==== ",new_patient);
     
     return parseStringify(new_patient);
   } catch (error) {
