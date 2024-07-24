@@ -66,7 +66,6 @@ const RegisterForm = ({ user }: { user: User }) => {
                     <div className="mb-9 space-y-1">
                         <h2 className="sub-header">Personal Information.</h2>
                     </div>
-
                 </section>
                 <CustomFormFields
                     fieldType={FormFieldTypes.INPUT}
@@ -113,9 +112,9 @@ const RegisterForm = ({ user }: { user: User }) => {
                         control={form.control}
                         renderSkeleton={(field) => (
                             <FormControl>
-                                <RadioGroup className="flex h-11 gap-6 xl:justify-between" 
-                                onValueChange={field.onChange} 
-                                defaultValue={field.value}>
+                                <RadioGroup className="flex h-11 gap-6 xl:justify-between"
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}>
                                     {GenderOptions.map((option) => (
                                         <div key={option} className="radio-group">
                                             <RadioGroupItem value={option} id={option} />
@@ -132,12 +131,43 @@ const RegisterForm = ({ user }: { user: User }) => {
                 </div>
 
                 <div className="flex flex-col gap-6 xl:flex-row">
-
+                <CustomFormFields
+                    fieldType={FormFieldTypes.INPUT}
+                    name="address"
+                    label="Address"
+                    placeholder="14th Street, New york"
+                    control={form.control}
+                />
+                <CustomFormFields
+                    fieldType={FormFieldTypes.INPUT}
+                    name="occupation"
+                    label="Occupation"
+                    placeholder="Accountant, Software Engineer"
+                    control={form.control}
+                />
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row">
-
+                <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="emergencyContactName"
+                        label="Emergency Contact Name"
+                        placeholder="Guardian's name"
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.PHONE_INPUT}
+                        name="emergencyContactNumber"
+                        label="Emergency Contact Number"
+                        placeholder="(555) 123-4567"
+                        control={form.control}
+                    />
                 </div>
 
+                <section className="space-y-6">
+                    <div className="mb-9 space-y-1">
+                        <h2 className="sub-header">Medical Information.</h2>
+                    </div>
+                </section>
                 <div className="flex flex-col gap-6 xl:flex-row">
 
                 </div>
