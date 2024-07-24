@@ -292,9 +292,33 @@ const RegisterForm = ({ user }: { user: User }) => {
                     control={form.control}
                     renderSkeleton={(field) => (
                         <FormControl>
-                            <FileUploader files={field.value} onChange={field.onChange}/>
+                            <FileUploader files={field.value} onChange={field.onChange} />
                         </FormControl>
                     )}
+                />
+                <section className="space-y-6">
+                    <div className="mb-9 space-y-1">
+                        <h2 className="sub-header">Consent and Privacy.</h2>
+                    </div>
+                </section>
+
+                <CustomFormFields
+                    fieldType={FormFieldTypes.CHECKBOX}
+                    control={form.control}
+                    name="treatmentConsent"
+                    label="I consent to treatment"
+                />
+                <CustomFormFields
+                    fieldType={FormFieldTypes.CHECKBOX}
+                    control={form.control}
+                    name="disclosureConsent"
+                    label="I consent to disclosure of information"
+                />
+                <CustomFormFields
+                    fieldType={FormFieldTypes.CHECKBOX}
+                    control={form.control}
+                    name="privacyConsent"
+                    label="I consent to privacy policy"
                 />
                 <div className="flex flex-col gap-6 xl:flex-row">
 
