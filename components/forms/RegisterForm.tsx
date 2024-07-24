@@ -12,7 +12,7 @@ import { UserFormValidation } from "@/lib/FormValidation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { Doctors, GenderOptions } from "@/constants"
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants"
 import { SelectItem } from "../ui/select"
 import Image from 'next/image';
 
@@ -227,7 +227,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                     />
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row">
-                <CustomFormFields
+                    <CustomFormFields
                         fieldType={FormFieldTypes.TEXTAREA}
                         name="allergies"
                         label="Allergies (if any)"
@@ -241,6 +241,66 @@ const RegisterForm = ({ user }: { user: User }) => {
                         placeholder="Ibuprofen 200mg, Paracetamol 500mg"
                         control={form.control}
                     />
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.TEXTAREA}
+                        name="familyMedicalHistory"
+                        label="Family Medical History"
+                        placeholder="Father had dibeties."
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.TEXTAREA}
+                        name="pastMedicalHistory"
+                        label="Past Medical History"
+                        placeholder="Appendectomy, Tonsillectomy"
+                        control={form.control}
+                    />
+                </div>
+                <section className="space-y-6">
+                    <div className="mb-9 space-y-1">
+                        <h2 className="sub-header">Identification and Verification.</h2>
+                    </div>
+                </section>
+
+                <CustomFormFields
+                    fieldType={FormFieldTypes.SELECT}
+                    name="identificationType"
+                    label="Identification Type"
+                    placeholder="Select an Identification Type"
+                    control={form.control}
+                >
+                    {IdentificationTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                            {type}
+                        </SelectItem>
+                    ))}
+                </CustomFormFields>
+                <CustomFormFields
+                    fieldType={FormFieldTypes.INPUT}
+                    name="identificationNumber"
+                    label="Identification Number"
+                    placeholder="ABC1234567890"
+                    control={form.control}
+                />
+                <CustomFormFields
+                    fieldType={FormFieldTypes.SKELETON}
+                    name="identificationDocument"
+                    label="Scanned Copy of Identification Document"
+                    control={form.control}
+                    renderSkeleton={(field) => (
+                        <FormControl>
+                            File Upload
+
+                        </FormControl>
+                    )}
+                />
+                <div className="flex flex-col gap-6 xl:flex-row">
+
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row">
 
