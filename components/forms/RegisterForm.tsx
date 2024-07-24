@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Doctors, GenderOptions, IdentificationTypes } from "@/constants"
 import { SelectItem } from "../ui/select"
 import Image from 'next/image';
+import FileUploader from "../FileUploader"
 
 
 
@@ -291,8 +292,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                     control={form.control}
                     renderSkeleton={(field) => (
                         <FormControl>
-                            File Upload
-
+                            <FileUploader files={field.value} onChange={field.onChange}/>
                         </FormControl>
                     )}
                 />
