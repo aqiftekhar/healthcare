@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -7,26 +7,45 @@ import { Form, FormControl } from "@/components/ui/form"
 import CustomFormFields from "../CustomFormFields"
 import { FormFieldTypes } from "@/lib/FormFieldTypes"
 import SubmitButton from "../SubmitButton"
-import { useState } from "react"
-import { UserFormValidation } from "@/lib/FormValidation"
+import { useEffect, useState } from "react"
+import { PatientFormValidation } from "@/lib/FormValidation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.actions"
+import { createUser, getUser, registerPatient } from "@/lib/actions/patient.actions"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants"
+import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants"
 import { SelectItem } from "../ui/select"
 import Image from 'next/image';
 import FileUploader from "../FileUploader"
 
 
 
-const RegisterForm = ({ user }: { user: User }) => {
+const RegisterForm = ({ userId }: { userId: string }) => {
+    // const user =  getUser(userId);
     const router = useRouter();
     const [isLoading, setisLoading] = useState(false);
+    const [user, setUser] = useState(null);
+    // const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        const fetchUser = async () => {
+        //   setLoading(true);
+          try {
+            const userData = await getUser(userId);
+            setUser(userData);
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          } finally {
+            // setLoading(false);
+          }
+        };
+    
+        fetchUser();
+      }, [userId]);
     // 1. Define your form.
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
+    const form = useForm<z.infer<typeof PatientFormValidation>>({
+        resolver: zodResolver(PatientFormValidation),
         defaultValues: {
+            ...PatientFormDefaultValues,
             name: "",
             email: "",
             phone: ""
@@ -34,23 +53,40 @@ const RegisterForm = ({ user }: { user: User }) => {
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof UserFormValidation>) {
+    async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
 
         setisLoading(true);
 
+        let form_data;
+
+        if (values.identificationDocument && values.identificationDocument.length > 0) {
+            const blob = new Blob([values.identificationDocument[0]], {
+                type: values.identificationDocument[0].type,
+            })
+
+            form_data = new FormData();
+            form_data.append('blobFile', blob);
+            form_data.append('fileName', values.identificationDocument[0].name);
+        }
+
+        console.log({user});
+        
         try {
-
-            const user_data = {
-                name: values.name,
-                email: values.email,
-                phone: values.phone,
-            };
-
-            const user = await createUser(user_data);
-
-            if (user) router.push(`/patients/${user.$id}/register`)
+            const patient_data = {
+                ...values,
+                userId: userId,
+                birthDate: new Date(values.birthDate),
+                identificationDocument: form_data,
+            }
+            console.log("=== PATIENT DATA ===",{patient_data});
+            
+            //@ts-ignore
+            const patient = await registerPatient(patient_data);
+            console.log("===PATIENT===", patient);
+            
+            if(patient) router.push(`/patients/${userId}/new-appointment`)
         } catch (error) {
             console.log(error)
         }
@@ -194,22 +230,6 @@ const RegisterForm = ({ user }: { user: User }) => {
                             </SelectItem>
                         ))}
                     </CustomFormFields>
-                </div>
-                <div className="flex flex-col gap-6 xl:flex-row">
-                    <CustomFormFields
-                        fieldType={FormFieldTypes.INPUT}
-                        name="insuranceProvider"
-                        label="Insurance Provider"
-                        placeholder="EFU Life, Adam Insurance"
-                        control={form.control}
-                    />
-                    <CustomFormFields
-                        fieldType={FormFieldTypes.INPUT}
-                        name="insurancePolicyNumber"
-                        label="Insurance Policy Number"
-                        placeholder="ABC1234567890"
-                        control={form.control}
-                    />
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row">
                     <CustomFormFields
