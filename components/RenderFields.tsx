@@ -9,6 +9,7 @@ import { E164Number } from "libphonenumber-js/core";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 export const RenderFields = ({ field, props }: { field: any, props: ICustomProps }) => {
     const { fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, renderSkeleton } = props;
@@ -74,6 +75,24 @@ export const RenderFields = ({ field, props }: { field: any, props: ICustomProps
         case FormFieldTypes.SKELETON:
             return (
                 renderSkeleton ? renderSkeleton(field) : null
+            )
+        case FormFieldTypes.SELECT:
+            return (
+                <FormControl>
+                    <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}>
+                        <FormControl>
+                            <SelectTrigger className="shad-select-trigger">
+                                <SelectValue placeholder={placeholder} />
+                            </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="shad-select-content">
+                            {props.children}
+                        </SelectContent>
+                    </Select>
+
+                </FormControl>
             )
         default:
             break;
