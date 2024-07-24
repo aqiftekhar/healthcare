@@ -132,23 +132,23 @@ const RegisterForm = ({ user }: { user: User }) => {
                 </div>
 
                 <div className="flex flex-col gap-6 xl:flex-row">
-                <CustomFormFields
-                    fieldType={FormFieldTypes.INPUT}
-                    name="address"
-                    label="Address"
-                    placeholder="14th Street, New york"
-                    control={form.control}
-                />
-                <CustomFormFields
-                    fieldType={FormFieldTypes.INPUT}
-                    name="occupation"
-                    label="Occupation"
-                    placeholder="Accountant, Software Engineer"
-                    control={form.control}
-                />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="address"
+                        label="Address"
+                        placeholder="14th Street, New york"
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="occupation"
+                        label="Occupation"
+                        placeholder="Accountant, Software Engineer"
+                        control={form.control}
+                    />
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row">
-                <CustomFormFields
+                    <CustomFormFields
                         fieldType={FormFieldTypes.INPUT}
                         name="emergencyContactName"
                         label="Emergency Contact Name"
@@ -170,7 +170,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                     </div>
                 </section>
                 <div className="flex flex-col gap-6 xl:flex-row">
-                <CustomFormFields
+                    <CustomFormFields
                         fieldType={FormFieldTypes.SELECT}
                         name="primaryPhysician"
                         label="Primary Physician"
@@ -178,10 +178,10 @@ const RegisterForm = ({ user }: { user: User }) => {
                         control={form.control}
                     >
                         {Doctors.map((doctor) => (
-                            
+
                             <SelectItem key={doctor.name} value={doctor.name}>
                                 <div className="flex cursor-pointer items-center gap-2">
-                                    <Image 
+                                    <Image
                                         src={doctor.image}
                                         width={32}
                                         height={32}
@@ -193,6 +193,57 @@ const RegisterForm = ({ user }: { user: User }) => {
                             </SelectItem>
                         ))}
                     </CustomFormFields>
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="insuranceProvider"
+                        label="Insurance Provider"
+                        placeholder="EFU Life, Adam Insurance"
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="insurancePolicyNumber"
+                        label="Insurance Policy Number"
+                        placeholder="ABC1234567890"
+                        control={form.control}
+                    />
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="insuranceProvider"
+                        label="Insurance Provider"
+                        placeholder="EFU Life, Adam Insurance"
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.INPUT}
+                        name="insurancePolicyNumber"
+                        label="Insurance Policy Number"
+                        placeholder="ABC1234567890"
+                        control={form.control}
+                    />
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+                <CustomFormFields
+                        fieldType={FormFieldTypes.TEXTAREA}
+                        name="allergies"
+                        label="Allergies (if any)"
+                        placeholder="Peanuts, Penicillin, Pollen etc."
+                        control={form.control}
+                    />
+                    <CustomFormFields
+                        fieldType={FormFieldTypes.TEXTAREA}
+                        name="currentMedications"
+                        label="Current Medication (if any)"
+                        placeholder="Ibuprofen 200mg, Paracetamol 500mg"
+                        control={form.control}
+                    />
+                </div>
+                <div className="flex flex-col gap-6 xl:flex-row">
+
                 </div>
                 <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
             </form>
