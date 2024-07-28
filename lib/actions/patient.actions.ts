@@ -13,6 +13,7 @@ import {
 } from "../Appwrite.config";
 import { parseStringify } from "../utils";
 import { InputFile } from "node-appwrite/file";
+import { Patient } from "@/types/appwrite.types";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -38,14 +39,34 @@ export const createUser = async (user: CreateUserParams) => {
 export const getUser = async (userId: string) => {
     try {
       const user = await users.get(userId);
-        console.log("===USER===",parseStringify(user));
-        
+
       return parseStringify(user);
     } catch (error) {
       console.error(
         "An error occurred while retrieving the user details:",
         error
       );
+    }
+  };
+
+  // GET USER
+export const getPatient = async (userId: string): Promise<Patient | null> => {
+    try {
+      const pateints = await databases.listDocuments(
+        DATABASE_ID!,
+        PATIENT_COLLECTION_ID!,
+        [
+            Query.equal('userId', userId)
+        ]
+      ); 
+        
+      return parseStringify(pateints.documents[0]);
+    } catch (error) {
+      console.error(
+        "An error occurred while retrieving the patient details:",
+        error
+      );
+      return null;
     }
   };
 
@@ -81,3 +102,5 @@ export const registerPatient = async ({
     
   }
 };
+
+
