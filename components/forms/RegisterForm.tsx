@@ -44,7 +44,6 @@ const RegisterForm = ({ userId }: { userId: string }) => {
     // 1. Define your form.
     const form = useForm<z.infer<typeof PatientFormValidation>>({
         resolver: zodResolver(PatientFormValidation),
-        //@ts-ignore
         defaultValues: {
             ...PatientFormDefaultValues,
             name: "",
