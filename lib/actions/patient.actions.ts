@@ -17,6 +17,8 @@ import { Patient } from "@/types/appwrite.types";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
+    console.log("USER = ", user);
+    
     const new_user = await users.create(
       ID.unique(),
       user.email,
