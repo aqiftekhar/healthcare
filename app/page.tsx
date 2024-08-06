@@ -23,7 +23,7 @@ export default function Home({searchParams}: SearchParamProps) {
 
         <div className="text-14-regular mt-20 flex justify-between">
           <p className="justify-items-end text-dark-600 xl:text-left">
-            © 2024 - Connex Tech
+            © 2024 - ByteBlend Studio
           </p>
           <Link href='/?admin=true' className="text-green-500">
           Admin

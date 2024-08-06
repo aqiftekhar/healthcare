@@ -84,7 +84,7 @@ function SuccessRequest({ userId, appointmentId }: { userId: string, appointment
                 <Button variant="outline" className="shad-primary-btn" asChild>
                     <Link href={`/patients/${userId}/new-appointment`}>New Appointment</Link>
                 </Button>
-                <p className="copyright">© 2024 - Connex Tech</p>
+                <p className="copyright">© 2024 - ByteBlend Studio</p>
             </div>
         </div>
     )
