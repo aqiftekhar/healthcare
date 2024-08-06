@@ -1,12 +1,15 @@
+import PassKeyModal from "@/components/PassKeyModal";
 import PatientForm from "@/components/forms/PatientForm";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({searchParams}: SearchParamProps) {
+  const isAdmin = searchParams.admin === 'true';
+
   return (
     <div className="flex h-screen max-h-screen">
-
+      {isAdmin && <PassKeyModal/>}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image src='/assets/icons/logo-full.svg'
@@ -22,7 +25,7 @@ export default function Home() {
           <p className="justify-items-end text-dark-600 xl:text-left">
             © 2024 - Connex Tech
           </p>
-          <Link href='/admin=true' className="text-green-500">
+          <Link href='/?admin=true' className="text-green-500">
           Admin
           </Link>
         </div>

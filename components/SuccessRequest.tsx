@@ -7,29 +7,30 @@ import { Appointment } from "@/types/appwrite.types";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
-function SuccessRequest({userId, appointmentId}: {userId: string, appointmentId: string}) {
-    
+function SuccessRequest({ userId, appointmentId }: { userId: string, appointmentId: string }) {
+
     const [isLoading, setisLoading] = useState(false);
     const [appointment, setAppointment] = useState<Appointment | null>(null);;
     const [doctor, setDoctor] = useState<{ image: string; name: string } | null>(null);
     useEffect(() => {
         const fetchUser = async () => {
-        //   setLoading(true);
-          try {
-            const fetchAppointment = await getAppointment(appointmentId);
-            const fetchDoctor = await Doctors.find((doc) => doc.name === fetchAppointment.primaryPhysician) || null
-            setAppointment(fetchAppointment);
-            setDoctor(fetchDoctor);
-          } catch (error) {
-            console.error('Error fetching user data:', error);
-          } finally {
-            // setLoading(false);
-          }
+            //   setLoading(true);
+            try {
+                const fetchAppointment = await getAppointment(appointmentId);
+                const fetchDoctor = await Doctors.find((doc) => doc.name === fetchAppointment.primaryPhysician) || null
+                setAppointment(fetchAppointment);
+                setDoctor(fetchDoctor);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            } finally {
+                // setLoading(false);
+            }
         };
-    
+
         fetchUser();
-      }, [appointmentId]);
+    }, [appointmentId]);
 
 
     return (
@@ -59,7 +60,7 @@ function SuccessRequest({userId, appointmentId}: {userId: string, appointmentId:
                 <section className="request-details">
                     <p>Requested appointment details:</p>
                     <div className="flex items-center gap-3">
-                        <Image 
+                        <Image
                             src={doctor?.image! || ""}
                             alt="doctor"
                             width={100}
@@ -71,16 +72,19 @@ function SuccessRequest({userId, appointmentId}: {userId: string, appointmentId:
                         </p>
                     </div>
                     <div className="flex gap-2">
-                        <Image 
+                        <Image
                             src="/assets/icons/calendar.svg"
                             height={24}
                             width={24}
                             alt="calander"
                         />
-                       <p>{appointment?.schedule ? formatDateTime(appointment.schedule).dateTime : "N/A"}</p>
+                        <p>{appointment?.schedule ? formatDateTime(appointment.schedule).dateTime : "N/A"}</p>
                     </div>
                 </section>
-
+                <Button variant="outline" className="shad-primary-btn" asChild>
+                    <Link href={`/patients/${userId}/new-appointment`}>New Appointment</Link>
+                </Button>
+                <p className="copyright">© 2024 - Connex Tech</p>
             </div>
         </div>
     )
