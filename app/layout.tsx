@@ -12,7 +12,7 @@ const font = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AI MedPulse",
+  title: "Care Pulse",
   description: "An AI based Healthcare Management System",
 };
 
